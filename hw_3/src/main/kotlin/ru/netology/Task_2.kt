@@ -16,17 +16,18 @@ fun calculateCommission(
     currentTransfer: Int,
     transfersPerDay: Int = 0,
     transfersPerMonth: Int = 0
-): Int? {
-    if (!transferIsAvailable(senderType, currentTransfer, transfersPerDay, transfersPerMonth)) return null
-    return when (senderType) {
-        SenderType.VK_PAY -> 0
-        SenderType.MASTER_CARD, SenderType.MAESTRO -> commissionForMasterCardAndMaestro(currentTransfer)
-        SenderType.VISA, SenderType.MIR -> commissionForVisaAndMir(currentTransfer)
-    }
+) = if (transferIsAvailable(senderType, currentTransfer, transfersPerDay, transfersPerMonth)) when (senderType) {
+    SenderType.VK_PAY -> 0
+    SenderType.MASTER_CARD, SenderType.MAESTRO -> commissionForMasterCardAndMaestro(currentTransfer)
+    SenderType.VISA, SenderType.MIR -> commissionForVisaAndMir(currentTransfer)
+} else null
 
-}
-
-fun transferIsAvailable(senderType: SenderType, currentTransfer: Int, transfersPerDay: Int, transfersPerMonth: Int): Boolean {
+fun transferIsAvailable(
+    senderType: SenderType,
+    currentTransfer: Int,
+    transfersPerDay: Int,
+    transfersPerMonth: Int
+): Boolean {
     val cardsMaxPerDay = 150_000_00
     val cardsMaxPerMonth = 600_000_00
     val vkMaxTransfer = 15_000_00
@@ -55,4 +56,3 @@ fun commissionForVisaAndMir(currentTransfer: Int): Int {
 
     return if (commission < minCommission) minCommission else commission
 }
-

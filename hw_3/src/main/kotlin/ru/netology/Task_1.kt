@@ -26,10 +26,3 @@ fun pluralForm(value: Int, one: String, few: String, many: String): String {
     }
     return "$value $word"
 }
-
-
-
-
-
-
-
