@@ -22,7 +22,7 @@ internal class Task1Test {
 
         @JvmStatic
         fun providerForTransferIsAvailable() = listOf(
-            Arguments.of(true, SenderType.VK_PAY, 15_000_00, 0, 0),
+            Arguments.of(false, SenderType.VK_PAY, 15_000_00, 0, 0),
             Arguments.of(false, SenderType.VK_PAY, 15_001_00, 0, 0),
             Arguments.of(true, SenderType.VK_PAY, 1000_00, 0, 40_000_00),
             Arguments.of(false, SenderType.VK_PAY, 1000_00, 0, 40_001_00),
