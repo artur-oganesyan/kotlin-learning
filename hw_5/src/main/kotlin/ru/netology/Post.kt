@@ -4,27 +4,28 @@ data class Post(
     var id: Int?,
     val ownerId: Int,
     val fromId: Int,
-    val createdBy: Int,
+    val createdBy: Int? = null,
     val date: Int,
-    val text: String,
-    val replyOwnerId: Int,
-    val replyPostId: Int,
+    val text: String?,
+    val replyOwnerId: Int? = null,
+    val replyPostId: Int? = null,
     val friendsOnly: Boolean,
-    val comments: Comments,
-    val copyright: Copyright,
+    val comments: Comments? = null,
+    val copyright: Copyright? = null,
     val likes: Likes,
     val reposts: Reposts,
     val views: Views,
     val postType: String,
-    val signerId: Int,
+    val attachments: List<Attachment>?,
+    val signerId: Int? = null,
     val canPin: Boolean,
     val canDelete: Boolean,
     val canEdit: Boolean,
     val isPinned: Boolean,
     val markedAsAds: Boolean,
     val isFavorite: Boolean,
-    val donut: Donut,
-    val postponedId: Int
+    val donut: Donut? = null,
+    val postponedId: Int? = null
 )
 
 data class Comments(
@@ -61,7 +62,7 @@ data class Views(
 data class Donut(
     val isDonut: Boolean,
     val paidDuration: Int,
-    val placeholder: Placeholder,
+    val placeholder: Placeholder? = null,
     val canPublishFreeCopy: Boolean,
     val editMode: String
 )
