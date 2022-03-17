@@ -2,6 +2,7 @@ package ru.netology
 
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
@@ -37,7 +38,7 @@ class WallServiceTest {
         )
 
         val newPost = WallService.add(post)
-        assertEquals(WallService.lastId, newPost.id)
+        assertEquals(WallService.lastPostId, newPost.id)
     }
 
     @Test
@@ -107,5 +108,57 @@ class WallServiceTest {
         assertFalse(WallService.update(post))
     }
 
+    @Test
+    fun createComment(){
+        val post = Post(
+            999,
+            1,
+            1,
+            1,
+            1,
+            "",
+            1,
+            1,
+            true,
+            Comments(1, true, true, true, true),
+            Copyright(1, "", "", ""),
+            Likes(1, true, true, true),
+            Reposts(1, true),
+            Views(1),
+            "",
+            listOf(Photo(1, 2, 3, 4, "5", 6)),
+            1,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            Donut(true, 1, Placeholder(""), true, ""),
+            1
+        )
+        val id = WallService.add(post).id
+        val comment = Comment(
+            id = 1,
+            postId = id!!,
+            text = "test"
+        )
+        WallService.createComment(comment)
+        assertEquals(WallService.comments[0].text, "test")
+    }
+
+    @Test
+    fun createCommentShouldThrow() {
+        val comment = Comment(
+            id = 1,
+            postId = 111,
+            text = "test"
+        )
+        assertThrows(
+            WallService.PostNotFoundException::class.java
+        ) {
+            WallService.createComment(comment)
+        }
+    }
 
 }
