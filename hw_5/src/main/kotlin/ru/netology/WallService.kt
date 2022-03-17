@@ -3,10 +3,12 @@ package ru.netology
 object WallService {
 
     val posts = mutableListOf<Post>()
-    var lastId = 0
+    val comments = mutableListOf<Comment>()
+    var lastPostId = 0
+    var lastCommentId = 0
 
     fun add(post: Post): Post = post.apply {
-        id = ++lastId
+        id = ++lastPostId
         posts.add(this)
     }
 
@@ -16,5 +18,17 @@ object WallService {
             posts[index] = post.copy(fromId = posts[index].fromId, date = posts[index].date)
             true
         } else false
+    }
+
+    fun createComment(comment: Comment): Comment {
+        posts.singleOrNull { it.id == comment.postId } ?: throw PostNotFoundException()
+        return comment.apply {
+            id = ++lastCommentId
+            comments.add(this)
+        }
+    }
+
+    class PostNotFoundException : RuntimeException() {
+        override val message = "Post not found"
     }
 }
