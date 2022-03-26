@@ -1,104 +1,71 @@
 package ru.netology
 
-abstract class Attachment {
-    abstract val type: String
+interface Attachment {
+    val type: String
 }
 
-abstract class PhotoAttachment : Attachment() {
+data class PhotoAttachment(
+    override val type: String = "photo",
+    val photo: Photo = Photo()
+) : Attachment
 
-    override val type = "photo"
+data class PostedPhotoAttachment(
+    override val type: String = "posted_photo",
+    val postedPhoto: PostedPhoto = PostedPhoto()
+) : Attachment
 
-    abstract val id: Int
-    abstract val album_id: Int
-    abstract val owner_id: Int
-    abstract val user_id: Int
-    abstract val text: String
-    abstract val date: Int
-}
+data class VideoAttachment(
+    override val type: String = "video",
+    val video: Video = Video()
+) : Attachment
 
-class Photo(
-    override val id: Int,
-    override val album_id: Int,
-    override val owner_id: Int,
-    override val user_id: Int,
-    override val text: String,
-    override val date: Int
+data class AudioAttachment(
+    override val type: String = "audio",
+    val audio: Audio = Audio()
+) : Attachment
 
-) : PhotoAttachment()
+data class DocAttachment(
+    override val type: String = "doc",
+    val doc: Doc = Doc()
+) : Attachment
 
-abstract class PostedPhotoAttachment : Attachment() {
+data class Photo(
+    val id: Int? = null,
+    val albumId: Int? = null,
+    val ownerId: Int? = null,
+    val userId: Int? = null,
+    val text: String? = null,
+    val date: Int? = null
+)
 
-    override val type = "posted_photo"
+data class PostedPhoto(
+    val id: Int? = null,
+    val albumId: Int? = null,
+    val photo130: String? = null,
+    val photo604: String? = null
+)
 
-    abstract val id: Int
-    abstract val album_id: Int
-    abstract val photo_130: String
-    abstract val photo_604: String
-}
+data class Video(
+    val id: Int? = null,
+    val ownerId: Int? = null,
+    val title: String? = null,
+    val description: String? = null,
+    val date: Int? = null
+)
 
-class PostedPhoto(
-    override val id: Int,
-    override val album_id: Int,
-    override val photo_130: String,
-    override val photo_604: String
-) : PostedPhotoAttachment()
+data class Audio(
+    val id: Int? = null,
+    val ownerId: Int? = null,
+    val artist: String? = null,
+    val title: String? = null,
+    val duration: Int? = null,
+    val date: Int? = null
+)
 
-abstract class VideoAttachment : Attachment() {
-
-    override val type = "video"
-
-    abstract val id: Int
-    abstract val owner_id: Int
-    abstract val title: String
-    abstract val description: String
-    abstract val date: Int
-}
-
-class Video(
-    override val id: Int,
-    override val owner_id: Int,
-    override val title: String,
-    override val description: String,
-    override val date: Int
-) : VideoAttachment()
-
-abstract class AudioAttachment : Attachment() {
-
-    override val type = "audio"
-
-    abstract val id: Int
-    abstract val owner_id: Int
-    abstract val artist: String
-    abstract val title: String
-    abstract val duration: Int
-    abstract val date: Int
-}
-
-class Audio(
-    override val id: Int,
-    override val owner_id: Int,
-    override val artist: String,
-    override val title: String,
-    override val duration: Int,
-    override val date: Int
-) : AudioAttachment() {
-
-    abstract class DocAttachment : Attachment() {
-
-        override val type = "doc"
-
-        abstract val id: Int
-        abstract val owner_id: Int
-        abstract val title: String
-        abstract val url: String
-        abstract val date: Int
-    }
-
-    class Doc(
-        override val id: Int,
-        override val owner_id: Int,
-        override val title: String,
-        override val url: String,
-        override val date: Int
-    ) : DocAttachment()
-}
+data class Doc(
+    val id: Int? = null,
+    val ownerId: Int? = null,
+    val title: String? = null,
+    val url: String? = null,
+    val date: Int? = null
+)
